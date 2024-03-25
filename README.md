@@ -17,15 +17,12 @@ This project delves into cloud computing paradigms, notably Serverless computing
 - Detailed analysis of performance and efficiency.
 - Scalable and cost-effective solutions for complex image processing.
 
-## Architecture Flow
-
-The architecture flow for implementing Neural Style Transfer using AWS Lambda and related technologies is as follows:
+## Architecture Flow for Lambda
 
 <!--  -->
 
-![Architecture Flow](Images/Architecture.jpg "Architecture Flow")
+![Architecture Flow](Images/lambdaArch.jpg "Architecture Flow")
 
-<!--  -->
 <!--  -->
 
 1. **State Configuration for Lambda:** Given that AWS Lambda is inherently stateless, establishing a state is crucial. We leverage AWS Elastic File System (EFS) to maintain state across executions.
@@ -41,6 +38,28 @@ The architecture flow for implementing Neural Style Transfer using AWS Lambda an
 6. **Frontend Integration:** The destination folder in S3 is linked to our frontend website, allowing for the display and access of stylized images.
 
 7. **Load Testing:** We employ the Vegeta load tester to conduct stress tests on the architecture, ensuring its robustness under high demand.
+
+## Architecture Flow for EC2
+
+<!--  -->
+
+![Architecture Flow](Images/ec2Arch.png "Architecture Flow")
+
+<!--  -->
+
+1. **Creation of S3 Bucket:** An S3 bucket is set up through the AWS console, serving as the storage point for input and output images related to the Neural Style Transfer model. This bucket facilitates easy access and management of images needed for style transfer operations.
+
+2. **EC2 Instance Setup:** We initiate an EC2 instance via the AWS console, installing essential software components such as Python, Flask, and the Neural Style Transfer model. This step prepares the computing environment for deploying and running our application.
+
+3. **Flask App Development:** A Flask application is developed to interact with the S3 bucket. It retrieves input images, processes them through the Neural Style Transfer model, and saves the stylized images back into an output folder within the same S3 bucket. Additionally, this app is configured to send operational metrics to Datadog for monitoring purposes.
+
+4. **Datadog Integration:** Datadog is integrated to monitor the Flask application, receiving metrics that help in setting up alerts and visualization dashboards. This step is crucial for maintaining the application's performance and availability, providing insights into its operation.
+
+5. **Flask App Deployment:** The Flask app is deployed on the EC2 instance, with configurations set to utilize the S3 bucket for image storage and Datadog for monitoring. This deployment makes the application accessible and functional for processing Neural Style Transfer requests.
+
+6. **Access to Flask App:** Users can access the Flask application through a web browser using the public IP address of the EC2 instance. This accessibility allows for the straightforward submission of images for stylization and the retrieval of processed outputs.
+
+<!--  -->
 
 ## Conclusion
 
